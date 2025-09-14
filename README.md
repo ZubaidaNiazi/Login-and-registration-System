@@ -1,2 +1,2 @@
-# Login-and-registration-System
-This C++ program provides a simple user registration and login system using file handling. It ensures unique usernames, securely stores credentials in a text file, and allows existing users to log in by verifying username and password. Input validation ensures correct choices during registration and login.
+
+https://drive.google.com/file/d/1ZAmT9ycJ0OSR8Uyt9RQV5_rQQdRVpj4S/view?usp=drivesdk
