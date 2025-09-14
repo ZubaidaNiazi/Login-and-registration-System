@@ -1,1 +1,83 @@
+#include <iostream>
+#include <fstream>
+#include <string>
+using namespace std;
 
+// Check if username is unique
+bool isUsernameUnique(const string& username) {
+    ifstream infile("users.txt");
+    if (!infile) return true; // file doesn't exist yet
+
+    string storedUsername, storedPassword;
+    while (infile >> storedUsername >> storedPassword) {
+        if (storedUsername == username) {
+            return false;
+        }
+    }
+    return true;
+}
+
+// Register new user
+void registerUser() {
+    string username, password;
+    cout << "Enter new username: ";
+    cin >> username;
+
+    if (!isUsernameUnique(username)) {
+        cout << "Error: Username already exists!\n";
+        return;
+    }
+
+    cout << "Enter new password: ";
+    cin >> password;
+
+    ofstream outfile("users.txt", ios::app);
+    outfile << username << " " << password << endl;
+    cout << "Registration successful!\n";
+}
+
+// Login existing user
+bool loginUser() {
+    string username, password;
+    cout << "Enter username: ";
+    cin >> username;
+    cout << "Enter password: ";
+    cin >> password;
+
+    ifstream infile("users.txt");
+    if (!infile) {
+        cout << "No users registered yet!\n";
+        return false;
+    }
+
+    string storedUsername, storedPassword;
+    while (infile >> storedUsername >> storedPassword) {
+        if (storedUsername == username && storedPassword == password) {
+            return true;
+        }
+    }
+    return false;
+}
+
+int main() {
+    int choice;
+    cout << "1. Register\n2. Login\nChoose an option: ";
+    while (!(cin >> choice) || (choice != 1 && choice != 2)) {
+        cout << "Invalid choice! Enter 1 for Register or 2 for Login: ";
+        cin.clear();
+        cin.ignore(10000, '\n');
+    }
+
+    if (choice == 1) {
+        registerUser();
+    } else if (choice == 2) {
+        if (loginUser()) {
+            cout << "Login successful!\n";
+        } else {
+            cout << "Error: Invalid username or password!\n";
+        }
+  
+  }
+
+    return 0;
+}
